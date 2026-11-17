@@ -1,0 +1,2163 @@
+﻿/* ===========================================================
+   24-1571GuadesPersonalPortfolio - Portfolio.css
+   Pinterest-inspired profile/board layout.
+   =========================================================== */
+
+:root {
+    --accent: #d51007;
+    --accent-hover: #b50d06;
+    --bg: #ffffff;
+    --surface: #efefef;
+    --surface-hover: #e2e2e2;
+    --text-primary: #111111;
+    --text-secondary: #5f5f5f;
+    --text-faint: #8c8c8c;
+    --border: #e6e6e6;
+    --rail-width: 72px;
+    --topbar-height: 64px;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .08);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, .16);
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+svg.icon {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+}
+
+/* ===========================================================
+   ICON RAIL (left, fixed)
+   =========================================================== */
+
+#iconRail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--rail-width);
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    z-index: 300;
+    transition: transform .2s ease;
+}
+
+.rail-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+.rail-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.rail-spacer {
+    flex: 1;
+}
+
+.rail-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    position: relative;
+}
+
+    .rail-btn:hover,
+    .rail-btn:focus-visible {
+        background: var(--surface);
+        outline: none;
+    }
+
+    .rail-btn.active {
+        background: #111111;
+        color: #ffffff;
+    }
+
+    /* tooltip on hover */
+    .rail-btn[title]:hover::after {
+        content: attr(title);
+        position: absolute;
+        left: 56px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #111111;
+        color: #fff;
+        font-size: 12px;
+        padding: 5px 9px;
+        border-radius: 6px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 400;
+    }
+
+.rail-toggle {
+    display: none;
+}
+
+/* Text label next to each icon. Hidden on desktop (the hover tooltip covers that),
+   shown on phone width where hover doesn't exist. */
+.rail-label {
+    display: none;
+}
+
+.rail-close {
+    display: none;
+}
+
+/* Full-screen scrim behind the rail on phone width, so tapping outside it (or Esc) closes it. */
+.rail-backdrop {
+    display: none;
+}
+
+/* ===========================================================
+   TOP BAR
+   =========================================================== */
+
+#topBar {
+    position: fixed;
+    top: 0;
+    left: var(--rail-width);
+    right: 0;
+    height: var(--topbar-height);
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    z-index: 250;
+}
+
+.search-form {
+    flex: 1;
+    max-width: 640px;
+    margin: 0 auto 0 0;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+#boardSearch {
+    width: 100%;
+    height: 44px;
+    border-radius: 999px;
+    border: none;
+    background: var(--surface);
+    padding: 0 16px 0 44px;
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+    #boardSearch:focus {
+        outline: 2px solid var(--text-primary);
+        outline-offset: -2px;
+    }
+
+.topbar-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+}
+
+/* ===========================================================
+   PAGE FRAME
+   =========================================================== */
+
+.site-body {
+    margin-left: var(--rail-width);
+    padding-top: var(--topbar-height);
+    min-height: 100vh;
+}
+
+.page-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+}
+
+/* ===========================================================
+   PROFILE HEADER
+   =========================================================== */
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 48px 16px 32px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+}
+
+.profile-name {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.profile-tagline {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin: 0 0 14px;
+}
+
+.profile-bio {
+    max-width: 480px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0 0 20px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+}
+
+.pill-btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+    .pill-btn-primary:hover {
+        background: var(--accent-hover);
+    }
+
+.pill-btn-secondary {
+    background: var(--surface);
+    color: var(--text-primary);
+}
+
+    .pill-btn-secondary:hover {
+        background: var(--surface-hover);
+    }
+
+/* ===========================================================
+   BOARDS SECTION
+   =========================================================== */
+
+.boards-heading-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 8px 0 20px;
+}
+
+.boards-heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.boards-count {
+    font-size: 13px;
+    color: var(--text-faint);
+}
+
+.board-grid {
+    --board-gap-x: 16px; /* the horizontal gap; the wide tiles use it to work out their height */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px var(--board-gap-x);
+}
+
+.board-tile {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    color: inherit;
+    border-radius: var(--radius-lg);
+}
+
+    .board-tile:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 3px;
+    }
+
+.board-cover {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.board-tile:hover .board-cover {
+    transform: scale(1.015);
+    box-shadow: var(--shadow-md);
+}
+
+.cover-solid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .cover-solid svg.icon {
+        width: 42px;
+        height: 42px;
+        color: rgba(255, 255, 255, .92);
+        stroke-width: 1.6;
+    }
+
+/* Photo cover used by the Gallery and Interests tiles: one large photo on the left and up to three
+   small ones stacked on the right. minmax(0, ...) stops the photos' own sizes from stretching the
+   columns or rows, so every slot is exactly equal. The grid fills the cover without adding to its size. */
+.cover-quad {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 2px;
+}
+
+    /* Fewer photos: one fills the whole cover, two share it equally. */
+    .cover-quad.cover-single {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .cover-quad.cover-duo {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+.cover-main {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    object-fit: cover;
+}
+
+/* The small photos share the column's height equally, whether there are one, two or three. */
+.cover-stack {
+    display: grid;
+    grid-auto-rows: minmax(0, 1fr);
+    gap: 2px;
+    min-width: 0;
+    min-height: 0;
+}
+
+    .cover-stack img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        min-height: 0;
+        object-fit: cover;
+    }
+
+/* A wide tile spans two columns, so its width is two columns plus one gap. Half of that width
+   minus half a gap is exactly ONE column, which is the height of a square tile's cover. The height
+   is set with percentage padding (a percentage of the tile's width), so it is exact at every screen
+   size and nothing inside the tile can make it taller. */
+.board-tile-wide {
+    grid-column: span 2;
+}
+
+    .board-tile-wide .board-cover {
+        aspect-ratio: auto;
+        height: 0;
+        padding-bottom: calc((100% - var(--board-gap-x)) / 2);
+    }
+
+
+.board-meta {
+    padding: 10px 2px 0;
+}
+
+.board-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 2px;
+}
+
+.board-sub {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin: 0;
+}
+
+/* ===========================================================
+   OVERLAYS (board overlay + pin modals share base)
+   =========================================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 500;
+}
+
+    .modal-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+.modal-box {
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    max-width: 460px;
+    width: 100%;
+    max-height: 86vh;
+    overflow-y: auto;
+    padding: 32px 28px 28px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+}
+
+    .modal-close:hover {
+        background: var(--surface-hover);
+    }
+
+.modal-box h3 {
+    margin: 0 0 14px;
+    font-size: 19px;
+    padding-right: 28px;
+}
+
+.modal-box p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 10px;
+}
+
+.modal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+    .modal-link svg.icon {
+        width: 16px;
+        height: 16px;
+    }
+
+/* Board overlay: wider variant */
+.board-box {
+    max-width: 900px;
+    max-height: 88vh;
+    padding: 24px 28px 32px;
+}
+
+.board-overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-right: 34px;
+    margin-bottom: 20px;
+}
+
+.board-back {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+}
+
+    .board-back:hover {
+        background: var(--surface-hover);
+    }
+
+.board-overlay-title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.board-overlay-sub {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: var(--text-faint);
+}
+
+.board-overlay-desc {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+}
+
+    .contact-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .contact-row svg.icon {
+        width: 18px;
+        height: 18px;
+        color: var(--text-primary);
+    }
+
+    .contact-row a {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+/* pin-card grid inside a board overlay */
+.pin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.pin-card {
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    color: inherit;
+    border-radius: var(--radius-md);
+}
+
+    .pin-card:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 2px;
+    }
+
+.pin-cover {
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s ease;
+}
+
+.pin-card:hover .pin-cover {
+    transform: scale(1.02);
+}
+
+.pin-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pin-cover svg.icon {
+    width: 30px;
+    height: 30px;
+    color: rgba(255, 255, 255, .92);
+    stroke-width: 1.6;
+}
+
+.pin-label {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Masonry variant used inside the Interests board overlay */
+.masonry-grid {
+    column-count: 3;
+    column-gap: 14px;
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 14px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    .masonry-item img {
+        width: 100%;
+        display: block;
+        transition: transform .15s ease;
+    }
+
+    .masonry-item:hover img {
+        transform: scale(1.03);
+    }
+
+/* Picture pins show their title (and description) over the bottom of the photo on hover.
+   pointer-events:none keeps the click going through to the photo, which opens the lightbox. */
+.masonry-item {
+    position: relative;
+}
+
+.masonry-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 28px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.35;
+    background: linear-gradient(to top, rgba(0, 0, 0, .68), rgba(0, 0, 0, 0));
+    opacity: 0;
+    transition: opacity .15s ease;
+    pointer-events: none;
+}
+
+    .masonry-caption strong {
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+.masonry-item:hover .masonry-caption {
+    opacity: 1;
+}
+
+/* Touch screens have no hover, so the caption is always visible there. */
+@media (hover: none) {
+    .masonry-caption {
+        opacity: 1;
+    }
+}
+
+/* A hobby without a photo: a coloured card with its title and description. */
+.masonry-text {
+    min-height: 150px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    color: #fff;
+    cursor: default;
+}
+
+.masonry-text-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.masonry-text-desc {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    opacity: .9;
+}
+
+/* Lightbox */
+.lightbox-box {
+    max-width: 88vw;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+    .lightbox-box img {
+        max-height: 84vh;
+        border-radius: var(--radius-md);
+        margin: 0 auto;
+    }
+
+    .lightbox-box .modal-close {
+        background: #fff;
+    }
+
+/* ===========================================================
+   FOOTER
+   =========================================================== */
+
+.site-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    padding: 28px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.footer-copy {
+    font-size: 13px;
+    color: var(--text-faint);
+    margin: 0;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 8px;
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+    .footer-social-link:hover {
+        background: var(--surface-hover);
+    }
+
+    .footer-social-link svg.icon {
+        width: 16px;
+        height: 16px;
+    }
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+
+@media (max-width: 720px) {
+    :root {
+        --rail-width: 0px;
+    }
+
+    #iconRail {
+        transform: translateX(-100%);
+        width: 240px;
+        align-items: stretch;
+        padding: 20px 12px;
+        overflow-y: auto;
+        z-index: 320;
+    }
+
+        #iconRail.open {
+            transform: translateX(0);
+            box-shadow: var(--shadow-md);
+        }
+
+    .rail-links {
+        align-items: stretch;
+    }
+
+    .rail-btn {
+        width: 100%;
+        height: auto;
+        min-height: 44px;
+        border-radius: var(--radius-sm);
+        justify-content: flex-start;
+        gap: 12px;
+        padding: 10px 12px;
+    }
+
+        /* The tooltip only makes sense on hover-capable desktop; on phone width the
+           label sits inline instead (see .rail-label below). */
+        .rail-btn[title]:hover::after {
+            display: none;
+        }
+
+    .rail-label {
+        display: inline;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .rail-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        background: var(--surface);
+        color: var(--text-primary);
+        margin-bottom: 12px;
+    }
+
+        .rail-close:hover,
+        .rail-close:focus-visible {
+            background: var(--surface-hover);
+            outline: none;
+        }
+
+    .rail-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0);
+        pointer-events: none;
+        z-index: 310;
+        transition: background .2s ease;
+    }
+
+        .rail-backdrop.open {
+            background: rgba(0, 0, 0, .4);
+            pointer-events: auto;
+        }
+
+    .rail-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--surface);
+        color: var(--text-primary);
+    }
+
+    .page-inner {
+        padding: 0 16px 60px;
+    }
+
+    .board-grid {
+        --board-gap-x: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 14px var(--board-gap-x);
+    }
+
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+/* ===========================================================
+   AUTH CARD, ALERTS AND ACCOUNT MENU (added in Phase 3)
+   =========================================================== */
+
+.auth-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--surface);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 32px 28px;
+}
+
+.auth-brand {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-logo {
+    margin-bottom: 16px;
+}
+
+.auth-title {
+    text-align: center;
+    font-size: 26px;
+    margin: 0 0 6px;
+}
+
+.auth-sub {
+    text-align: center;
+    color: var(--text-secondary);
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.auth-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+a.pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert {
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    font-size: 14px;
+    margin: 20px 0 0;
+}
+
+.alert-error {
+    background: #fdecea;
+    color: #8a1007;
+    border: 1px solid #f5c2be;
+}
+
+.alert-success {
+    background: #e8f5ec;
+    color: #1e6b34;
+    border: 1px solid #b9dfc4;
+}
+
+.alert-info {
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.rail-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border);
+    margin: 14px 0;
+}
+
+.account-menu {
+    position: relative;
+    margin-left: auto;
+}
+
+.account-toggle {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    padding: 0 12px 0 4px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .account-toggle::-webkit-details-marker {
+        display: none;
+    }
+
+    .account-toggle:hover, .account-menu[open] .account-toggle {
+        background: var(--surface);
+    }
+
+    .account-toggle:focus-visible {
+        outline: 2px solid var(--text-primary);
+    }
+
+.account-initial {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.account-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.account-dropdown {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    min-width: 200px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 8px;
+    z-index: 400;
+}
+
+.account-role {
+    margin: 0;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-faint);
+}
+
+.account-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: none;
+    background: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+    .account-item:hover, .account-item:focus-visible {
+        background: var(--surface);
+        outline: none;
+    }
+
+@media (max-width: 720px) {
+    .account-name {
+        display: none;
+    }
+
+    .account-toggle {
+        padding: 0 4px;
+    }
+}
+
+/* ===========================================================
+   LOGIN AND SIGNUP FORMS (added in Phase 4)
+   =========================================================== */
+
+.auth-card .alert {
+    margin: 0 0 16px;
+}
+
+.form-field {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    display: block;
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 6px;
+    padding: 0 16px;
+    border: 2px solid #cdcdcd;
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 16px;
+}
+
+    .form-input:hover {
+        border-color: #adadad;
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--text-primary);
+        box-shadow: 0 0 0 3px rgba(17, 17, 17, .12);
+    }
+
+.form-hint {
+    margin: 0 0 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.form-error {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #b3140a;
+}
+
+.auth-submit {
+    width: 100%;
+    height: 44px;
+    margin-top: 6px;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+    .auth-submit:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 2px;
+    }
+
+.auth-foot {
+    margin: 20px 0 0;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+    .auth-foot a {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+        .auth-foot a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-foot a:focus-visible {
+            outline: 2px solid var(--text-primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+@media (max-width: 480px) {
+    .auth-wrap {
+        padding: 16px;
+    }
+
+    .auth-card {
+        padding: 28px 20px;
+    }
+}
+
+/* ===========================================================
+   LATEST ANNOUNCEMENT (Home)
+   =========================================================== */
+
+.announcement-card {
+    max-width: 720px;
+    margin: 0 auto 32px;
+    padding: 20px 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.announcement-label {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.announcement-title {
+    margin: 0 0 2px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.announcement-date {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--text-faint);
+}
+
+.announcement-body {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    white-space: pre-line;
+}
+
+/* ===========================================================
+   MY ACCOUNT (added in Phase 6)
+   =========================================================== */
+
+.settings-title {
+    font-size: 26px;
+    margin: 0 0 20px;
+}
+
+.settings-grid {
+    display: grid;
+    gap: 24px;
+    max-width: 560px;
+}
+
+.settings-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+    .settings-card h2 {
+        font-size: 17px;
+        margin: 0 0 16px;
+    }
+
+.settings-card .alert {
+    margin: 0 0 16px;
+}
+
+.readonly-field {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-bottom: 6px;
+    padding: 0 16px;
+    line-height: 46px;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 16px;
+}
+
+.settings-submit {
+    justify-content: center;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+/* ===========================================================
+   ADMIN PAGES (added in Phase 7A; the table, badge, button,
+   filter and empty-state styles are reused by the other Admin pages)
+   =========================================================== */
+
+.admin-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 20px;
+}
+
+.admin-title {
+    margin: 0 0 4px;
+    font-size: 26px;
+}
+
+.admin-sub {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.admin-count {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* search + status filter */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 20px;
+}
+
+    .filter-bar .form-input {
+        margin: 0;
+        height: 44px;
+    }
+
+.filter-input {
+    flex: 1 1 260px;
+    max-width: 420px;
+}
+
+.filter-select {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 160px;
+}
+
+.filter-bar .pill-btn {
+    height: 44px;
+    cursor: pointer;
+}
+
+/* data table (scrolls sideways on narrow screens) */
+.table-scroll {
+    overflow-x: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.data-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+    .data-table th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        background: #fafafa;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+    }
+
+/* Sortable column headers (Manage Users, Manage Posts): the whole header label is a
+   button. Clicking it sorts by that column; clicking again reverses the direction. */
+.th-sort {
+    display: inline-block;
+    padding: 0;
+    margin: -2px 0;
+    background: none;
+    border: none;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+    .th-sort:hover,
+    .th-sort:focus-visible {
+        color: var(--text-primary);
+        text-decoration: underline;
+        outline: none;
+    }
+
+    .th-sort.active {
+        color: var(--accent);
+    }
+
+    .data-table td {
+        padding: 12px 16px;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .data-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .data-table tbody tr:hover td {
+        background: #fafafa;
+    }
+
+    .data-table .cell-strong {
+        font-weight: 600;
+    }
+
+    .data-table .cell-wrap {
+        word-break: break-word;
+    }
+
+    .data-table .cell-actions {
+        white-space: nowrap;
+    }
+
+/* role and status badges */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-admin {
+    background: #23272f;
+    color: #fff;
+}
+
+.badge-user {
+    background: var(--surface);
+    color: var(--text-primary);
+}
+
+.badge-active {
+    background: #e8f5ec;
+    color: #1e6b34;
+}
+
+.badge-inactive {
+    background: #fdecea;
+    color: #8a1007;
+}
+
+.you-tag {
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+/* small buttons inside table rows */
+.row-btn {
+    height: 32px;
+    padding: 0 14px;
+    margin-right: 6px;
+    border: 1px solid #cdcdcd;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    .row-btn:hover {
+        background: var(--surface);
+    }
+
+    .row-btn:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 2px;
+    }
+
+    .row-btn:disabled {
+        opacity: .45;
+        cursor: not-allowed;
+    }
+
+        .row-btn:disabled:hover {
+            background: var(--bg);
+        }
+
+.row-btn-danger {
+    color: #b3140a;
+    border-color: #f0b7b2;
+}
+
+    .row-btn-danger:hover {
+        background: #fdecea;
+    }
+
+    .row-btn-danger:disabled:hover {
+        background: var(--bg);
+    }
+
+/* nothing to show */
+.empty-state {
+    padding: 48px 24px;
+    text-align: center;
+    background: var(--bg);
+    border: 1px dashed #cdcdcd;
+    border-radius: var(--radius-lg);
+}
+
+.empty-title {
+    margin: 0 0 4px;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.empty-text {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 720px) {
+    .admin-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .filter-input {
+        max-width: none;
+    }
+}
+
+/* ===========================================================
+   MANAGE CONTENT (added in Phase 7B)
+   =========================================================== */
+
+.tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+}
+
+.tab-link {
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    .tab-link:hover {
+        background: var(--surface-hover);
+    }
+
+    .tab-link:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: 2px;
+    }
+
+    .tab-link.active {
+        background: var(--text-primary);
+        color: #fff;
+    }
+
+.editor-card {
+    max-width: 720px;
+    padding: 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+    .editor-card h2 {
+        margin: 0 0 4px;
+        font-size: 18px;
+    }
+
+    .editor-card .alert {
+        margin: 0 0 16px;
+    }
+
+.editor-intro {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+}
+
+.form-textarea {
+    height: auto;
+    min-height: 120px;
+    padding: 12px 16px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.form-file {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 6px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.avatar-edit {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-preview {
+    flex: 0 0 auto;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--surface);
+}
+
+.avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--text-faint);
+}
+
+@media (max-width: 720px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar-edit {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ===========================================================
+   LIST + ADD/EDIT EDITORS (added in Phase 7B-2; reused by the
+   Skills, Hobbies, Projects and Gallery editors)
+   =========================================================== */
+
+.editor-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 16px;
+}
+
+    .editor-head .editor-intro {
+        margin: 0;
+    }
+
+    .editor-head .pill-btn {
+        flex: 0 0 auto;
+        cursor: pointer;
+    }
+
+.editor-title {
+    margin: 0 0 4px;
+    font-size: 18px;
+}
+
+.editor-form {
+    margin: 0 0 24px;
+}
+
+.editor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+    .editor-actions .pill-btn {
+        cursor: pointer;
+    }
+
+.form-field-narrow {
+    max-width: 220px;
+}
+
+.thumb {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    background: var(--surface);
+}
+
+.thumb-empty {
+    background: var(--surface);
+}
+
+.photo-preview {
+    display: block;
+    width: 120px;
+    height: 90px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    background: var(--surface);
+}
+
+@media (max-width: 720px) {
+    .editor-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .editor-head .pill-btn {
+        align-self: flex-start;
+    }
+}
+
+/* description preview column in the Skills list (added in Phase 7B-3) */
+.data-table .cell-desc {
+    max-width: 420px;
+    color: var(--text-secondary);
+}
+
+/* ===========================================================
+   GALLERY CAPTIONS
+   =========================================================== */
+
+/* one gallery pin: the photo plus its optional caption under it */
+.pin-item {
+    min-width: 0;
+}
+
+/* the lightbox sits on a dark backdrop, so its caption is white */
+.lightbox-box .lightbox-caption {
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    margin: 12px 0 0;
+}
+
+/* ===========================================================
+   ANNOUNCEMENTS ADMIN (added in Phase 7C)
+   =========================================================== */
+
+/* count + "New announcement" button sit together on the right of the page heading */
+.admin-head {
+    flex-wrap: wrap;
+}
+
+.admin-head-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 0 0 auto;
+}
+
+    .admin-head-actions .pill-btn {
+        cursor: pointer;
+    }
+
+/* "Publish" checkbox in the add/edit form */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    .form-check input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent);
+    }
+
+    .form-check label {
+        cursor: pointer;
+    }
+
+/* title, one-line preview and "Updated" note inside the posts list */
+.data-table .post-title {
+    margin: 0 0 2px;
+    font-weight: 700;
+}
+
+.data-table .post-preview {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.data-table .post-meta {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: var(--text-faint);
+}
+
+@media (max-width: 720px) {
+    .admin-head-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* ===========================================================
+   REPORTS (added in Phase 7D) - cards and charts, pure CSS
+   =========================================================== */
+
+/* the five summary cards */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin: 0 0 24px;
+}
+
+.stat-card {
+    padding: 18px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.stat-value {
+    margin: 0 0 4px;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.stat-label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* signups chart (wide) beside the active/inactive card (narrow) */
+.report-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 16px;
+    margin: 0 0 28px;
+}
+
+.report-card {
+    min-width: 0;
+    padding: 20px 22px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.report-title {
+    margin: 0 0 2px;
+    font-size: 17px;
+}
+
+.report-sub {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.report-heading {
+    margin: 0 0 12px;
+    font-size: 18px;
+}
+
+/* signups per month: one column per month */
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.bar-col {
+    flex: 1 0 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.bar-value {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.bar-track {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 150px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.bar-fill {
+    width: 100%;
+    background: var(--accent);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.bar-label {
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+/* active versus inactive: one stacked bar plus a legend */
+.split-bar {
+    display: flex;
+    height: 20px;
+    background: var(--surface);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.split-active {
+    background: #2f8f4e;
+}
+
+.split-inactive {
+    background: var(--accent);
+}
+
+.split-legend {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 8px;
+    border-radius: 50%;
+}
+
+.legend-active {
+    background: #2f8f4e;
+}
+
+.legend-inactive {
+    background: var(--accent);
+}
+
+/* the two-column content summary table: same width as the rest of the report,
+   not the wide table's 900px minimum (it only has two columns). */
+.data-table-compact {
+    width: 100%;
+    min-width: 0;
+}
+
+    .data-table-compact td:last-child,
+    .data-table-compact th:last-child {
+        width: 120px;
+    }
+
+.report-heading + .table-scroll {
+    margin-bottom: 28px;
+}
+
+@media (max-width: 900px) {
+    .report-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* ===========================================================
+   UPDATES: auto-dismiss alerts, password show/hide, password
+   strength meter, and hover tooltips on the Reports charts
+   =========================================================== */
+
+.alert-dismissing {
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+/* ---- password fields: the "show password" eye button ---- */
+.password-field {
+    position: relative;
+}
+
+    .password-field .form-input {
+        padding-right: 44px;
+    }
+
+.password-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+}
+
+    .password-toggle svg.icon {
+        width: 19px;
+        height: 19px;
+    }
+
+    .password-toggle:hover {
+        color: var(--text-primary);
+    }
+
+    .password-toggle:focus-visible {
+        outline: 2px solid var(--text-primary);
+        outline-offset: -2px;
+    }
+
+    .password-toggle .icon-eye-off {
+        display: none;
+    }
+
+/* ---- password strength meter (shown under a new-password field) ---- */
+.pwd-strength {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 2px;
+}
+
+.pwd-strength-track {
+    flex: 1 1 auto;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--surface);
+    overflow: hidden;
+}
+
+.pwd-strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: var(--border);
+    transition: width .2s ease, background-color .2s ease;
+}
+
+.pwd-strength-0 { background: #c73a2e; }
+.pwd-strength-1 { background: #d17a1f; }
+.pwd-strength-2 { background: #c7a41f; }
+.pwd-strength-3 { background: #6fa832; }
+.pwd-strength-4 { background: #1e6b34; }
+
+.pwd-strength-label {
+    flex: 0 0 auto;
+    min-width: 76px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* ---- hover tooltips on the Reports bar chart and the active/inactive bar,
+   the same technique as the icon rail's tooltip (content: attr(title)) ---- */
+.bar-col,
+.split-active,
+.split-inactive {
+    position: relative;
+}
+
+.bar-col[title]:hover::after,
+.split-active[title]:hover::after,
+.split-inactive[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    background: #111111;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 50;
+}
